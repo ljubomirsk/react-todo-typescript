@@ -1,0 +1,46 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["typescript", "@typescript-eslint"],
+  "parserOptions": {
+    "jsx": true,
+    "useJSXTextNode": true,
+    "allowTypedFunctionExpressions": true
+  },
+  "extends": [
+    "airbnb",
+    "typescript",
+    "typescript/react",
+    "typescript/prettier"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".jsx", ".tsx"] }
+    ],
+    "no-undef": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      1,
+      {
+        "allowTypedFunctionExpressions": true
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "printWidth": 100,
+        "trailingComma": "es5"
+      }
+    ],
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "import/prefer-default-export": "off",
+    "valid-jsdoc": "off",
+    "no-console": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
