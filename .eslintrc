@@ -10,7 +10,8 @@
     "airbnb",
     "typescript",
     "typescript/react",
-    "typescript/prettier"
+    "typescript/prettier",
+    "prettier/@typescript-eslint"
   ],
   "rules": {
     "react/jsx-filename-extension": [
@@ -21,7 +22,8 @@
     "@typescript-eslint/explicit-function-return-type": [
       1,
       {
-        "allowTypedFunctionExpressions": true
+        "allowTypedFunctionExpressions": true,
+        "allowExpressions": true
       }
     ],
     "prettier/prettier": [
