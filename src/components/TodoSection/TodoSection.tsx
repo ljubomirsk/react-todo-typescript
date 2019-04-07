@@ -19,7 +19,11 @@ import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
 import Button from '../Button/Button';
 import Filter from '../Filter/Filter';
-import { getTodosWithFilter, getFilterType } from '../../store/selectors/todoSelectors';
+import {
+  getTodosWithFilter,
+  getFilterType,
+  getAllTodos,
+} from '../../store/selectors/todoSelectors';
 import { FilterType } from '../../store/reducers/todo/todoReducer';
 
 const Container = styled.div`
@@ -36,7 +40,8 @@ const ButtonActionsContainer = styled.div`
 `;
 
 interface StateProps {
-  todos: Todo[];
+  filteredTodos: Todo[];
+  allTodos: Todo[];
   filterType: FilterType;
 }
 
@@ -55,7 +60,8 @@ type Props = StateProps & DispatchProps;
 const TodoSection: FunctionComponent<Props> = props => {
   const [todoTitle, setTodoTitle] = useState('');
   const {
-    todos,
+    filteredTodos,
+    allTodos,
     filterType,
     addTodo,
     removeTodo,
@@ -98,7 +104,7 @@ const TodoSection: FunctionComponent<Props> = props => {
         <Button
           variant="default"
           width="150px"
-          disabled={todos.length === 0}
+          disabled={allTodos.length === 0}
           onClick={markAllAsComplete}
         >
           Mark all as complete
@@ -106,14 +112,14 @@ const TodoSection: FunctionComponent<Props> = props => {
         <Button
           variant="delete"
           width="150px"
-          disabled={todos.length === 0}
+          disabled={allTodos.length === 0}
           onClick={removeAllTodos}
         >
           Delete all
         </Button>
       </ButtonActionsContainer>
       <Filter filterType={filterType} filterByType={filterByTodoType} />
-      {todos.map(todo => (
+      {filteredTodos.map(todo => (
         <TodoItem
           todo={todo}
           key={todo.id}
@@ -127,8 +133,9 @@ const TodoSection: FunctionComponent<Props> = props => {
 };
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = state => ({
-  todos: getTodosWithFilter(state),
+  filteredTodos: getTodosWithFilter(state),
   filterType: getFilterType(state),
+  allTodos: getAllTodos(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
