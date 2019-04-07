@@ -45,6 +45,7 @@ const TodoItem: FunctionComponent<Props> = ({ todo, onToggleStatus, onEdit, onDe
   };
 
   const onCancelEdit = (): void => {
+    setEditValue(todo.title);
     setEdit(false);
   };
 
