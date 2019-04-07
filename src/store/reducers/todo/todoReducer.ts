@@ -88,7 +88,6 @@ const markAllComplete: TodoReducer = state => {
 
 const removeAll: TodoReducer = state => {
   const todoState = state as TodoState;
-  const { todos } = todoState;
 
   return {
     ...todoState,

@@ -17,8 +17,7 @@ export default function reducerWithActionMap<S, A extends Action = AnyAction>(
   actionMap: ActionMap<S, A>,
   initialState: S
 ): Reducer<S, A> {
-  const isDevelopment =
-    process.env.REACT_APP_NODE_ENV !== 'production' && process.env.REACT_APP_NODE_ENV !== 'sandbox';
+  const isDevelopment = process.env.REACT_APP_NODE_ENV !== 'production';
   if (initialState == null && isDevelopment) {
     throw new Error('Initial state cannot be null!');
   }
