@@ -11,7 +11,7 @@ import {
   setFilter,
 } from '../../actions/todoActions';
 
-const mockState: TodoState = {
+export const mockState: TodoState = {
   todos: [
     {
       id: 0,
