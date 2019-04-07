@@ -4,6 +4,8 @@ export interface Theme {
     secondary: string;
     background: string;
     error: string;
+    shadow: string;
+    disabled: string;
     text: {
       light: string;
       dark: string;
@@ -17,10 +19,12 @@ export interface Theme {
 
 const textColorLight = 'rgba(255, 255, 255, 1)';
 const textColorDark = 'rgba(0, 0, 0, 1)';
-const primaryColor = 'rgba(8, 61, 119, 1)';
-const secondaryColor = 'rgba(165, 24, 83, 1)';
+const primaryColor = '#FFCB23';
+const secondaryColor = '#FFA63C';
 const backgroundColor = 'rgba(255, 253, 249, 1)';
 const errorColor = 'rgba(213, 0, 0, 1)';
+const shadowColor = '#e7ebf4';
+const disabledColor = '#ccc';
 
 export default (): Theme => ({
   colors: {
@@ -28,6 +32,8 @@ export default (): Theme => ({
     secondary: secondaryColor,
     background: backgroundColor,
     error: errorColor,
+    shadow: shadowColor,
+    disabled: disabledColor,
     text: {
       light: textColorLight,
       dark: textColorDark,

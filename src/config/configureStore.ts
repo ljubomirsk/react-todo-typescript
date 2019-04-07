@@ -1,6 +1,6 @@
 import { createStore, Store } from 'redux';
-import rootReducer from '../reducers/rootReducer';
-import { RootState } from '../reducers/types/RootState';
+import rootReducer from '../store/reducers/rootReducer';
+import { RootState } from '../store/reducers/types/RootState';
 
 declare global {
   interface Window {
