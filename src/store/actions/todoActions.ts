@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { ActionWithPayload } from '../../utils/redux-utils';
+import { FilterType } from '../reducers/todo/todoReducer';
 
 export enum TodoActionTypes {
   ADD_TODO = 'ADD_TODO',
@@ -8,6 +9,7 @@ export enum TodoActionTypes {
   TOGGLE_TODO_STATUS = 'TOGGLE_TODO_STATUS',
   MARK_ALL_COMPLETE = 'MARK_ALL_COMPLETE',
   REMOVE_ALL = 'REMOVE_ALL',
+  SET_FILTER = 'SET_FILTER',
 }
 
 type TodoAction = Action<TodoActionTypes>;
@@ -42,4 +44,9 @@ export const editTodo = (
 ): TodoActionWithPayload<{ id: number; newTitle: string }> => ({
   type: TodoActionTypes.EDIT_TODO,
   payload: { id, newTitle },
+});
+
+export const setFilter = (filter: FilterType): TodoActionWithPayload<FilterType> => ({
+  type: TodoActionTypes.SET_FILTER,
+  payload: filter,
 });

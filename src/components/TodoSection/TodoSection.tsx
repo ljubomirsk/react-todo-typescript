@@ -9,6 +9,7 @@ import {
   toggleTodoStatus as toggleTodoStatusAction,
   markAllComplete as markAllCompleteAction,
   removeAll as removeAllAction,
+  setFilter as setFilterAction,
 } from '../../store/actions/todoActions';
 
 import { Todo } from '../../store/reducers/types/TodoState';
@@ -17,6 +18,9 @@ import { RootState } from '../../store/reducers/types/RootState';
 import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
 import Button from '../Button/Button';
+import Filter from '../Filter/Filter';
+import { getTodosWithFilter, getFilterType } from '../../store/selectors/todoSelectors';
+import { FilterType } from '../../store/reducers/todo/todoReducer';
 
 const Container = styled.div`
   display: flex;
@@ -33,6 +37,7 @@ const ButtonActionsContainer = styled.div`
 
 interface StateProps {
   todos: Todo[];
+  filterType: FilterType;
 }
 
 interface DispatchProps {
@@ -42,6 +47,7 @@ interface DispatchProps {
   toggleTodoStatus: (id: number) => void;
   removeAllTodos: () => void;
   markAllAsComplete: () => void;
+  filterByType: (filter: FilterType) => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -56,6 +62,8 @@ const TodoSection: FunctionComponent<Props> = props => {
     toggleTodoStatus,
     removeAllTodos,
     markAllAsComplete,
+    filterType,
+    filterByType,
   } = props;
 
   const onInputChanged = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -79,17 +87,32 @@ const TodoSection: FunctionComponent<Props> = props => {
     removeTodo(id);
   };
 
+  const filterByTodoType = (filter: FilterType): (() => void) => () => {
+    filterByType(filter);
+  };
+
   return (
     <Container>
       <AddTodo value={todoTitle} onChange={onInputChanged} onClick={onAddButtonClick} />
       <ButtonActionsContainer>
-        <Button variant="default" onClick={markAllAsComplete}>
+        <Button
+          variant="default"
+          width="150px"
+          disabled={todos.length === 0}
+          onClick={markAllAsComplete}
+        >
           Mark all as complete
         </Button>
-        <Button variant="delete" onClick={removeAllTodos}>
+        <Button
+          variant="delete"
+          width="150px"
+          disabled={todos.length === 0}
+          onClick={removeAllTodos}
+        >
           Delete all
         </Button>
       </ButtonActionsContainer>
+      <Filter filterType={filterType} filterByType={filterByTodoType} />
       {todos.map(todo => (
         <TodoItem
           todo={todo}
@@ -104,7 +127,8 @@ const TodoSection: FunctionComponent<Props> = props => {
 };
 
 const mapStateToProps: MapStateToProps<StateProps, {}, RootState> = state => ({
-  todos: state.todo.todos,
+  todos: getTodosWithFilter(state),
+  filterType: getFilterType(state),
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
@@ -114,6 +138,7 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
   toggleTodoStatus: toggleTodoStatusAction,
   removeAllTodos: removeAllAction,
   markAllAsComplete: markAllCompleteAction,
+  filterByType: setFilterAction,
 };
 
 export default connect(

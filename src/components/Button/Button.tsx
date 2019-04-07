@@ -16,7 +16,7 @@ const Button = styled.button<{ variant: string; width?: string }>`
   border: none;
   margin: 0.4em;
   position: relative;
-  padding: 0.8em;
+  padding: 0.4em;
   width: ${ifProp('width', prop('width'), '100px')};
   border-radius: 7px;
   box-shadow: ${({ theme }) => `0 5px 5px 0 ${theme.colors.shadow}`};
@@ -26,6 +26,7 @@ const Button = styled.button<{ variant: string; width?: string }>`
 
   &:disabled {
     background: ${({ theme }) => theme.colors.disabled};
+    color: ${({ theme }) => theme.colors.text.light};
     cursor: auto;
   }
 
@@ -41,6 +42,7 @@ const Button = styled.button<{ variant: string; width?: string }>`
     `,
     [ButtonStyle.DELETE]: css`
       background: ${({ theme }) => theme.colors.error};
+      color: ${({ theme }) => theme.colors.text.light};
     `,
     [ButtonStyle.EDIT]: css`
       background: ${({ theme }) => theme.colors.secondary};

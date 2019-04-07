@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 2em 0;
 `;
 
