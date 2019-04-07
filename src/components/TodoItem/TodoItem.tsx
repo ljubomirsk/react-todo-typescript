@@ -86,7 +86,7 @@ const TodoItem: FunctionComponent<Props> = ({ todo, onToggleStatus, onEdit, onDe
     <Container>
       <InfoContainer>
         {titleSection}
-        <h3>Status: {status}</h3>
+        <h3 data-testid="status-header">Status: {status}</h3>
       </InfoContainer>
       <InfoContainer>
         <Button variant="default" onClick={onToggleTodoStatus}>

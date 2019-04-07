@@ -28,7 +28,7 @@ const FilterOption = styled.div<{ selected: boolean }>`
 `;
 
 interface Props {
-  filterType: string;
+  filterType: FilterType;
   filterByType: (filterType: FilterType) => () => void;
 }
 

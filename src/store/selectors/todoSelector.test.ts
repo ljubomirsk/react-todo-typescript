@@ -4,7 +4,7 @@ import { RootState } from '../reducers/types/RootState';
 import { mockState } from '../reducers/todo/todoReducer.test';
 import { TodoStatus, FilterType } from '../reducers/todo/todoReducer';
 
-const mockStoreState: RootState = {
+export const mockStoreState: RootState = {
   todo: mockState,
 };
 

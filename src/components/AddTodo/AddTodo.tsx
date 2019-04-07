@@ -24,7 +24,13 @@ const AddTodo: FunctionComponent<Props> = ({
   buttonText = 'Add Todo',
 }) => (
   <Container>
-    <Input type="text" placeholder="Todo title" onChange={onChange} value={value} />
+    <Input
+      data-testid="input-title"
+      type="text"
+      placeholder="Todo title"
+      onChange={onChange}
+      value={value}
+    />
     <Button variant="default" onClick={onClick}>
       {buttonText}
     </Button>
