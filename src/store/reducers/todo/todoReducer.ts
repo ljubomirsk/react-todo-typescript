@@ -9,7 +9,7 @@ const initialState: TodoState = {
 
 export enum TodoStatus {
   ACTIVE = 'ACTIVE',
-  DONE = 'DONE',
+  COMPLETE = 'COMPLETE',
 }
 
 type TodoReducer = Reducer<TodoState, TodoActionWithPayload>;
@@ -50,10 +50,42 @@ const editTodo: TodoReducer = (state, { payload }) => {
   };
 };
 
+const toggleTodoStatus: TodoReducer = (state, { payload: id }) => {
+  const { todos } = state as TodoState;
+  const editTodo = todos.find(todo => todo.id === id) as Todo;
+  editTodo.status = editTodo.status === TodoStatus.ACTIVE ? TodoStatus.COMPLETE : TodoStatus.ACTIVE;
+
+  return {
+    ...state,
+    todos: [...todos.slice(0, id), editTodo, ...todos.slice(id + 1)],
+  };
+};
+
+const markAllComplete: TodoReducer = state => {
+  const { todos } = state as TodoState;
+  const completedTodos = todos.map(todo => {
+    todo.status = TodoStatus.COMPLETE;
+    return todo;
+  });
+
+  return {
+    ...state,
+    todos: completedTodos,
+  };
+};
+
+const removeAll: TodoReducer = state => ({
+  ...state,
+  todos: [],
+});
+
 const actionMap: ActionMap<TodoState, TodoActionWithPayload> = {
   [TodoActionTypes.ADD_TODO]: addTodo,
   [TodoActionTypes.REMOVE_TODO]: removeTodo,
   [TodoActionTypes.EDIT_TODO]: editTodo,
+  [TodoActionTypes.TOGGLE_TODO_STATUS]: toggleTodoStatus,
+  [TodoActionTypes.MARK_ALL_COMPLETE]: markAllComplete,
+  [TodoActionTypes.REMOVE_ALL]: removeAll,
 };
 
 export default reducerWithActionMap(actionMap, initialState);

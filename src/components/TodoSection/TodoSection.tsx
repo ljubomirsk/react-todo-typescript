@@ -6,6 +6,9 @@ import {
   addTodo as addTodoAction,
   removeTodo as removeTodoAction,
   editTodo as editTodoAction,
+  toggleTodoStatus as toggleTodoStatusAction,
+  markAllComplete as markAllCompleteAction,
+  removeAll as removeAllAction,
 } from '../../store/actions/todoActions';
 
 import { Todo } from '../../store/reducers/types/TodoState';
@@ -13,6 +16,7 @@ import { RootState } from '../../store/reducers/types/RootState';
 
 import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
+import Button from '../Button/Button';
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +24,11 @@ const Container = styled.div`
   width: 100%;
   justify-content: space-evenly;
   align-items: center;
+`;
+
+const ButtonActionsContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
 `;
 
 interface StateProps {
@@ -30,12 +39,24 @@ interface DispatchProps {
   addTodo: (title: string) => void;
   removeTodo: (id: number) => void;
   editTodo: (id: number, newValue: string) => void;
+  toggleTodoStatus: (id: number) => void;
+  removeAllTodos: () => void;
+  markAllAsComplete: () => void;
 }
 
 type Props = StateProps & DispatchProps;
 
-const TodoSection: FunctionComponent<Props> = ({ todos, addTodo, removeTodo, editTodo }) => {
+const TodoSection: FunctionComponent<Props> = props => {
   const [todoTitle, setTodoTitle] = useState('');
+  const {
+    todos,
+    addTodo,
+    removeTodo,
+    editTodo,
+    toggleTodoStatus,
+    removeAllTodos,
+    markAllAsComplete,
+  } = props;
 
   const onInputChanged = (e: ChangeEvent<HTMLInputElement>): void => {
     setTodoTitle(e.target.value);
@@ -46,8 +67,8 @@ const TodoSection: FunctionComponent<Props> = ({ todos, addTodo, removeTodo, edi
     setTodoTitle('');
   };
 
-  const onComplete = (id: number): void => {
-    console.log(id);
+  const onToggleStatus = (id: number): void => {
+    toggleTodoStatus(id);
   };
 
   const onEdit = (id: number, newTitle: string): void => {
@@ -61,11 +82,19 @@ const TodoSection: FunctionComponent<Props> = ({ todos, addTodo, removeTodo, edi
   return (
     <Container>
       <AddTodo value={todoTitle} onChange={onInputChanged} onClick={onAddButtonClick} />
+      <ButtonActionsContainer>
+        <Button variant="default" onClick={markAllAsComplete}>
+          Mark all as complete
+        </Button>
+        <Button variant="delete" onClick={removeAllTodos}>
+          Delete all
+        </Button>
+      </ButtonActionsContainer>
       {todos.map(todo => (
         <TodoItem
           todo={todo}
           key={todo.id}
-          onComplete={onComplete}
+          onToggleStatus={onToggleStatus}
           onEdit={onEdit}
           onDelete={onDelete}
         />
@@ -82,6 +111,9 @@ const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
   addTodo: addTodoAction,
   removeTodo: removeTodoAction,
   editTodo: editTodoAction,
+  toggleTodoStatus: toggleTodoStatusAction,
+  removeAllTodos: removeAllAction,
+  markAllAsComplete: markAllCompleteAction,
 };
 
 export default connect(

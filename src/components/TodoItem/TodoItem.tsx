@@ -3,6 +3,7 @@ import styled from '../../config/styled-components';
 import { Todo as TodoProps } from '../../store/reducers/types/TodoState';
 import Button from '../Button/Button';
 import AddTodo from '../AddTodo/AddTodo';
+import { TodoStatus } from '../../store/reducers/todo/todoReducer';
 
 const Container = styled.div`
   display: flex;
@@ -24,12 +25,12 @@ const InfoContainer = styled.div`
 
 interface Props {
   todo: TodoProps;
-  onComplete: (id: number) => void;
+  onToggleStatus: (id: number) => void;
   onEdit: (id: number, newTitle: string) => void;
   onDelete: (id: number) => void;
 }
 
-const TodoItem: FunctionComponent<Props> = ({ todo, onComplete, onEdit, onDelete }) => {
+const TodoItem: FunctionComponent<Props> = ({ todo, onToggleStatus, onEdit, onDelete }) => {
   const [editValue, setEditValue] = useState(todo.title);
   const [edit, setEdit] = useState(false);
 
@@ -52,8 +53,8 @@ const TodoItem: FunctionComponent<Props> = ({ todo, onComplete, onEdit, onDelete
     setEdit(false);
   };
 
-  const onCompleteTodo = (): void => {
-    onComplete(id);
+  const onToggleTodoStatus = (): void => {
+    onToggleStatus(id);
   };
 
   const onDeleteTodo = (): void => {
@@ -88,8 +89,8 @@ const TodoItem: FunctionComponent<Props> = ({ todo, onComplete, onEdit, onDelete
         <h3>Status: {status}</h3>
       </InfoContainer>
       <InfoContainer>
-        <Button variant="default" onClick={onCompleteTodo}>
-          Mark as complete
+        <Button variant="default" onClick={onToggleTodoStatus}>
+          {status === TodoStatus.ACTIVE ? 'Mark as complete' : 'Mark as active'}
         </Button>
         {editButton}
         <Button variant="delete" onClick={onDeleteTodo}>
