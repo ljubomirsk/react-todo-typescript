@@ -43,7 +43,7 @@ const removeTodo: TodoReducer = (state, { payload: id }) => {
 
   return {
     ...todoState,
-    todos: [...todos.slice(0, id), ...todos.slice(id + 1)],
+    todos: todos.filter(todo => todo.id !== id),
   };
 };
 

@@ -40,5 +40,5 @@ export default function reducerWithActionMap<S, A extends Action = AnyAction>(
  * @template P The payload type
  */
 export interface ActionWithPayload<T, P = any> extends Action<T> {
-  payload: P;
+  payload?: P;
 }

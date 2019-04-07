@@ -56,13 +56,13 @@ const TodoSection: FunctionComponent<Props> = props => {
   const [todoTitle, setTodoTitle] = useState('');
   const {
     todos,
+    filterType,
     addTodo,
     removeTodo,
     editTodo,
     toggleTodoStatus,
     removeAllTodos,
     markAllAsComplete,
-    filterType,
     filterByType,
   } = props;
 
